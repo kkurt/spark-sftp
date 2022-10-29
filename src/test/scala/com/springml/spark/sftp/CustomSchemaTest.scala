@@ -1,13 +1,14 @@
 package com.springml.spark.sftp
 
 import org.apache.spark.sql.SparkSession
-import org.apache.spark.sql.types.{IntegerType, LongType, StringType, StructField, _}
-import org.scalatest.{BeforeAndAfterEach, FunSuite}
+import org.apache.spark.sql.types._
+import org.scalatest.BeforeAndAfterEach
+import org.scalatest.flatspec.AnyFlatSpec
 
 /**
   * Tests for creating dataframe using custom schema
   */
-class CustomSchemaTest extends FunSuite with BeforeAndAfterEach {
+class CustomSchemaTest extends AnyFlatSpec with BeforeAndAfterEach {
   var ss: SparkSession = _
 
   val csvTypesMap = Map("ProposalId" -> IntegerType,
@@ -38,7 +39,7 @@ class CustomSchemaTest extends FunSuite with BeforeAndAfterEach {
     columnStruct
   }
 
-  test ("Read CSV with custom schema") {
+  "Read CSV with custom schema" should "success" in {
     val columnStruct = columnArray(csvTypesMap)
     val expectedSchema = StructType(columnStruct)
 
@@ -50,7 +51,7 @@ class CustomSchemaTest extends FunSuite with BeforeAndAfterEach {
     dsr.schema.fields.foreach(s => validateTypes(s, csvTypesMap))
   }
 
-  test ("Read Json with custom schema") {
+  "Read Json with custom schema" should "success" in{
     val columnStruct = columnArray(jsonTypesMap)
     val expectedSchema = StructType(columnStruct)
 
