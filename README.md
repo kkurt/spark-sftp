@@ -1,10 +1,13 @@
 # Spark SFTP Connector Library
 
+This is forked from  https://github.com/springml/spark-sftp and changed for using sftp with Scala 2.13 and Spark 3.x.
+Have fun!
+
 A library for constructing dataframes by downloading files from SFTP and writing dataframe to a SFTP server
 
 ## Requirements
 
-This library requires Spark 2.x.
+This library requires Spark 3.x.
 
 For Spark 1.x support, please check [spark1.x](https://github.com/springml/spark-sftp/tree/spark1.x) branch.
 
