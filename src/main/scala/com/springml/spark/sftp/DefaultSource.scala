@@ -83,6 +83,7 @@ class DefaultSource extends RelationProvider with SchemaRelationProvider with Cr
     val copiedFileLocation = copy(sftpClient, path, tempFolder, copyLatest.toBoolean)
     val fileLocation = copyToHdfs(sqlContext, copiedFileLocation, hdfsTemp)
 
+
     if (!createDF.toBoolean) {
       logger.info("Returning an empty dataframe after copying files...")
       createReturnRelation(sqlContext, schema)
@@ -130,7 +131,7 @@ class DefaultSource extends RelationProvider with SchemaRelationProvider with Cr
     val tempFile = writeToTemp(sqlContext, data, hdfsTemp, tmpFolder, fileType, header, delimiter, quote, escape, multiLine, codec, rowTag, rootTag)
 
     upload(tempFile, path, sftpClient)
-    return createReturnRelation(data)
+    createReturnRelation(data)
   }
   private def copyToHdfs(sqlContext: SQLContext, fileLocation : String,
                          hdfsTemp : String): String  = {
@@ -141,9 +142,9 @@ class DefaultSource extends RelationProvider with SchemaRelationProvider with Cr
       fs.copyFromLocalFile(new Path(fileLocation), new Path(hdfsTemp))
       val filePath = hdfsTemp + "/" + hdfsPath.getName
       fs.deleteOnExit(new Path(filePath))
-      return filePath
+      filePath
     } else {
-      return fileLocation
+      fileLocation
     }
   }
 
@@ -265,7 +266,8 @@ class DefaultSource extends RelationProvider with SchemaRelationProvider with Cr
   }
 
   private def addShutdownHook(tempLocation: String) {
-    logger.debug("Adding hook for file " + tempLocation)
+    //logger.info("Adding hook for file " + tempLocation)
+    println("Adding hook for file " + tempLocation)
     val hook = new DeleteTempFileShutdownHook(tempLocation)
     Runtime.getRuntime.addShutdownHook(hook)
   }

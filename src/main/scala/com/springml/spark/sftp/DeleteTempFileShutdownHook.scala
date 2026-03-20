@@ -1,7 +1,5 @@
 package com.springml.spark.sftp
 
-import org.apache.commons.io.FileUtils
-import java.io.File
 import org.apache.log4j.Logger
 
 /**
@@ -14,6 +12,7 @@ class DeleteTempFileShutdownHook(
 
   override def run(): Unit = {
     logger.info("Deleting " + fileLocation )
-    FileUtils.deleteQuietly(new File(fileLocation))
+    println("Deleting " + fileLocation )
+    //FileUtils.deleteQuietly(new File(fileLocation))
   }
 }
